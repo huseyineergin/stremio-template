@@ -167,7 +167,7 @@ sudo cat /etc/wireguard/private.key | wg pubkey | sudo tee /etc/wireguard/public
 
 A single line of base64-encoded output will be produced again, which is the public key this time. Copy it somewhere for reference as well, since the public key needs to be distributed to any peer that will connect to the server.
 
-#### Choosing IPv4 Addresses
+#### Choosing IPv4 Address
 
 Choose an IPv4 range. The server needs a range of private IPv4 addresses to use for clients, and for its tunnel interface. Any range of IP addresses may be selected from the following reserved address blocks.
 - `10.0.0.0` to `10.255.255.255` (10/8 prefix)
@@ -180,12 +180,12 @@ The **WireGuard Server** will use a single IP address from the range for its pri
 
 #### Creating a WireGuard Server Configuration
 
-After obtaining the required private key and IP address(es), create a new configuration file using `vim` or another preferred editor.
+After obtaining the required private key and IP address, create a new configuration file using `vim` or another preferred editor.
 ```sh
 sudo vim /etc/wireguard/wg0.conf
 ```
 
-Add the following lines to the file, replacing the highlighted `base64_encoded_SERVER_PRIVATE_key_goes_here` with the private key, and updating the `Address` line with the appropriate IP address(es). The `ListenPort` line can also be modified to use a different port for WireGuard.
+Add the following lines to the file, replacing the highlighted `base64_encoded_SERVER_PRIVATE_key_goes_here` with the private key, and updating the `Address` line with the appropriate IP address. The `ListenPort` line can also be modified to use a different port for WireGuard.
 ```conf
 # /etc/wireguard/wg0.conf
 [Interface]
