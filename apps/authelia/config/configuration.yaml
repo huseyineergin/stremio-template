@@ -1,0 +1,93 @@
+# Reference: https://www.authelia.com/configuration/first-factor/file/
+authentication_backend:
+  file:
+    path: "/config/users.yaml"
+    search:
+      email: true
+      case_insensitive: false
+    password:
+      algorithm: "argon2"
+      argon2:
+        variant: "argon2id"
+        iterations: 3
+        memory: 65536
+        parallelism: 4
+        key_length: 32
+        salt_length: 16
+
+# Reference: https://www.authelia.com/configuration/second-factor/time-based-one-time-password/
+totp:
+  disable: false
+  issuer: auth.example.com
+  algorithm: sha256
+  digits: 6
+  period: 30
+  skew: 1
+  secret_size: 32
+
+# Reference: https://www.authelia.com/configuration/security/access-control/
+access_control:
+  default_policy: "deny"
+  # TODO
+
+# Reference: https://www.authelia.com/configuration/identity-validation/introduction/
+identity_validation:
+  reset_password:
+    jwt_secret: '{{ env "AUTHELIA_JWT_SECRET" }}'
+    jwt_lifespan: "5m"
+    jwt_algorithm: "HS256"
+
+# Reference: https://www.authelia.com/configuration/session/introduction/
+session:
+  secret: '{{ env "AUTHELIA_SESSION_SECRET" }}'
+  name: "authelia_session"
+  same_site: "lax"
+  inactivity: "5m"
+  expiration: "1h"
+  remember_me: "1w"
+
+  cookies:
+    domain: '{{ env "DOMAIN" }}'
+    authelia_url: 'https://{{ env "AUTHELIA_HOSTNAME" }}'
+    default_redirection_url: 'https://{{ env "DOMAIN" }}'
+
+  redis:
+    host: "authelia-redis"
+    timeout: "5s"
+    max_retries: 0
+    port: 6379
+    password: '{{ env "REDIS_PASSWORD" }}'
+
+# Reference: https://www.authelia.com/configuration/storage/introduction/
+storage:
+  encryption_key: '{{ env "AUTHELIA_STORAGE_ENCRYPTION_KEY" }}'
+  postgres:
+    address: "tcp://authelia-postgres:5432"
+    database: '{{ env "POSTGRES_DB" }}'
+    username: '{{ env "POSTGRES_USER" }}'
+    password: '{{ env "POSTGRES_PASSWORD" }}'
+
+# Reference: https://www.authelia.com/configuration/notifications/introduction/
+notifier:
+  filesystem:
+    filename: /config/notification.txt
+
+# Reference: https://www.authelia.com/configuration/miscellaneous/introduction/
+theme: "auto"
+
+# Reference: https://www.authelia.com/configuration/miscellaneous/server/
+server:
+  address: "tcp://:9091/"
+  buffers:
+    read: 4096
+    write: 4096
+  timeouts:
+  read: "6s"
+  write: "6s"
+  idle: "30s"
+
+# Reference: https://www.authelia.com/configuration/miscellaneous/logging/
+log:
+  level: "info"
+  format: "text"
+  keep_stdout: true

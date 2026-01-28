@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://www.authelia.com/schemas/latest/json-schema/user-database.json
+
+users:
+  john.doe:
+    disabled: false
+    displayname: "John Doe"
+    # Generate the Argon2 password hash using the following command:
+    # docker run --rm authelia/authelia:latest authelia crypto hash generate argon2 --password 'password'
+    password: "$argon2id$v=19$m=65536,t=3,p=4$grHh7x/AakOfCsD0+TLv4g$xVGlLlhf5qnw0HhgP9mbB86VxF5llEOP0iBE3k0y05M"
+    email: "john.doe@example.com"
+    groups:
+      - "admins"
+      - "dev"
+
+  jane.doe:
+    disabled: false
+    displayname: "Jane Doe"
+    # Generate the Argon2 password hash using the following command:
+    # docker run --rm authelia/authelia:latest authelia crypto hash generate argon2 --password 'password'
+    password: "$argon2id$v=19$m=65536,t=3,p=4$J1JhXzjEj9wmz+IuCJlLoA$0SMASlzSTNuug2ILQSbKmS5Fp6v2Z584l7f6AFruU0s"
+    email: "jane.doe@example.com"
+    groups: []
