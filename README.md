@@ -254,7 +254,7 @@ AllowedIPs = 10.8.0.2
 
 Bind SSH to the WireGuard interface, blocking public access.
 ```sh
-vim /etc/ssh/sshd_config
+sudo vim /etc/ssh/sshd_config
 ```
 
 Add the following lines to the file.
@@ -264,16 +264,16 @@ ListenAddress 10.8.0.1
 
 Restart SSH.
 ```sh
-service ssh restart
+sudo service ssh restart
 # or
-systemctl restart sshd.service
+sudo systemctl restart sshd.service
 ```
 
 Reload or restart the WireGuard service to apply changes.
 ```sh
-service wg-quick@wg0 restart
+sudo service wg-quick@wg0 restart
 # or
-systemctl restart wg-quick@wg0.service
+sudo systemctl restart wg-quick@wg0.service
 ```
 
 #### Verify the Connection
