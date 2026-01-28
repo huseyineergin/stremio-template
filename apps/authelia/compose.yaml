@@ -16,6 +16,11 @@ services:
       - "${DOCKER_LOGS_DIR}/authelia:/var/log/authelia/"
       - "./secrets:/secrets:ro"
       - "./config:/config"
+    depends_on:
+      authelia-redis:
+        condition: service_healthy
+      authelia-postgres:
+        condition: service_healthy
     restart: unless-stopped
 
   authelia-redis:

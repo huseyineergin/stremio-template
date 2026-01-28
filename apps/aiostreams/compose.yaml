@@ -14,7 +14,7 @@ services:
     volumes:
       - ${DOCKER_DATA_DIR}/aiostreams:/app/data
     depends_on:
-      postgres:
+      aiostreams-postgres:
         condition: service_healthy
     restart: unless-stopped
 
