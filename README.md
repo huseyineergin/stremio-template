@@ -5,11 +5,12 @@ This is a simplified version of [Viren070's template](https://github.com/Viren07
 ## Contents
 
 1. [Services](#services)
-2. [Prerequisites](#prerequisites)
-3. [VPS Setup](#vps-setup)
+2. [VPS Setup](#vps-setup)
     - [Essential Setup](#essential-setup)
     - [Extra Setup](#extra-setup)
-4. [Installation](#installation)
+3. [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
 
 ## Services
 
@@ -21,12 +22,6 @@ This is a simplified version of [Viren070's template](https://github.com/Viren07
 - **[Traefik](https://github.com/traefik/traefik)** is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.
 - **[Uptime Kuma](https://github.com/louislam/uptime-kuma)** is an easy-to-use self-hosted monitoring tool.
 - **[WARP-Docker](https://github.com/cmj2002/warp-docker)** runs official [Cloudflare WARP](1.1.1.1) client in Docker.
-
-## Prerequisites
-
-- A VPS with [Docker](https://www.docker.com/) installed. Follow the [official installation steps](https://docs.docker.com/engine/install/) for the selected platform.
-- Ports 80 and 443 are accessible on the VPS.
-- A domain with DNS records configured to point to the VPS IP for each domain or subdomain in use.
 
 ## VPS Setup
 
@@ -285,7 +280,15 @@ systemctl restart wg-quick@wg0.service
 
 In the WireGuard client, select the tunnel and click `Activate`. A successful handshake indicates active connectivity.
 
-## Installation
+## Getting Started
+
+### Prerequisites
+
+- A VPS with [Docker](https://www.docker.com/) installed. Follow the [official installation steps](https://docs.docker.com/engine/install/) for the selected platform.
+- Ports 80 and 443 are accessible on the VPS.
+- A domain with DNS records configured to point to the VPS IP for each domain or subdomain in use.
+
+### Installation
 
 1. Clone this repository and navigate into it:
 ```sh
