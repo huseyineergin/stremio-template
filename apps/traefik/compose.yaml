@@ -9,4 +9,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yaml:/traefik.yaml:ro
       - ./letsencrypt:/letsencrypt
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping", "--ping.entrypoint=web"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     restart: unless-stopped

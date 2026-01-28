@@ -11,4 +11,9 @@ services:
       - "traefik.http.routers.mediaflow.rule=Host(`${MEDIAFLOW_HOSTNAME?}`)"
       - "traefik.http.routers.mediaflow.entrypoints=websecure"
       - "traefik.http.routers.mediaflow.tls.certresolver=letsencrypt"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/localhost/8888"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     restart: unless-stopped

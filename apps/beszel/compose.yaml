@@ -12,6 +12,10 @@ services:
     volumes:
       - ${DOCKER_DATA_DIR}/beszel/socket:/beszel_socket
       - ${DOCKER_DATA_DIR}/beszel/data:/beszel_data
+    healthcheck:
+      test: ["CMD", "/beszel", "health", "--url", "http://localhost:8090"]
+      start_period: 5s
+      interval: 120s
     restart: unless-stopped
 
   beszel-agent:
@@ -26,4 +30,8 @@ services:
       - ${DOCKER_DATA_DIR}/beszel/agent:/var/lib/beszel-agent
       - ${DOCKER_DATA_DIR}/beszel/socket:/beszel_socket
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    healthcheck:
+      test: ["CMD", "/agent", "health"]
+      start_period: 5s
+      interval: 120s
     restart: unless-stopped

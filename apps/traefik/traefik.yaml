@@ -13,6 +13,9 @@ entryPoints:
   websecure:
     address: ":443"
 
+ping:
+  entryPoint: web
+
 certificatesResolvers:
   letsencrypt:
     acme:
