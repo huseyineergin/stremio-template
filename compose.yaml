@@ -1,5 +1,6 @@
 include:
   - apps/aiostreams/compose.yaml
+  - apps/authelia/compose.yaml
   - apps/beszel/compose.yaml
   - apps/dozzle/compose.yaml
   - apps/mediaflow-proxy/compose.yaml
