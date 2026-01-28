@@ -1,4 +1,4 @@
-# Reference: https://www.authelia.com/configuration/first-factor/file/
+#.*# Reference: https://www.authelia.com/configuration/first-factor/file/
 authentication_backend:
   file:
     path: "/config/users.yaml"
@@ -18,7 +18,7 @@ authentication_backend:
 # Reference: https://www.authelia.com/configuration/second-factor/time-based-one-time-password/
 totp:
   disable: false
-  issuer: auth.example.com
+  issuer: '{{ env "TEMPLATE_DOMAIN" }}'
   algorithm: sha256
   digits: 6
   period: 30
@@ -33,13 +33,13 @@ access_control:
 # Reference: https://www.authelia.com/configuration/identity-validation/introduction/
 identity_validation:
   reset_password:
-    jwt_secret: '{{ env "AUTHELIA_JWT_SECRET" }}'
+    jwt_secret: '{{ env "TEMPLATE_AUTHELIA_JWT_SECRET" }}'
     jwt_lifespan: "5m"
     jwt_algorithm: "HS256"
 
 # Reference: https://www.authelia.com/configuration/session/introduction/
 session:
-  secret: '{{ env "AUTHELIA_SESSION_SECRET" }}'
+  secret: '{{ env "TEMPLATE_AUTHELIA_SESSION_SECRET" }}'
   name: "authelia_session"
   same_site: "lax"
   inactivity: "5m"
@@ -47,9 +47,9 @@ session:
   remember_me: "1w"
 
   cookies:
-    domain: '{{ env "DOMAIN" }}'
-    authelia_url: 'https://{{ env "AUTHELIA_HOSTNAME" }}'
-    default_redirection_url: 'https://{{ env "DOMAIN" }}'
+    - domain: '{{ env "TEMPLATE_DOMAIN" }}'
+      authelia_url: 'https://{{ env "TEMPLATE_AUTHELIA_HOSTNAME" }}'
+      default_redirection_url: 'https://{{ env "TEMPLATE_DOMAIN" }}'
 
   redis:
     host: "authelia-redis"
@@ -60,7 +60,7 @@ session:
 
 # Reference: https://www.authelia.com/configuration/storage/introduction/
 storage:
-  encryption_key: '{{ env "AUTHELIA_STORAGE_ENCRYPTION_KEY" }}'
+  encryption_key: '{{ env "TEMPLATE_AUTHELIA_STORAGE_ENCRYPTION_KEY" }}'
   postgres:
     address: "tcp://authelia-postgres:5432"
     database: '{{ env "POSTGRES_DB" }}'
@@ -82,9 +82,9 @@ server:
     read: 4096
     write: 4096
   timeouts:
-  read: "6s"
-  write: "6s"
-  idle: "30s"
+    read: "6s"
+    write: "6s"
+    idle: "30s"
 
 # Reference: https://www.authelia.com/configuration/miscellaneous/logging/
 log:
