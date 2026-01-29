@@ -3,6 +3,7 @@ include:
   - apps/authelia/compose.yaml
   - apps/beszel/compose.yaml
   - apps/dozzle/compose.yaml
+  - apps/init/compose.yaml
   - apps/mediaflow-proxy/compose.yaml
   - apps/traefik/compose.yaml
   - apps/uptime-kuma/compose.yaml

@@ -1,0 +1,14 @@
+services:
+  init:
+    image: alpine:3.23
+    container_name: init
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+    user: "0:0"
+    volumes:
+      - ../traefik/letsencrypt:/letsencrypt
+      - ${DOCKER_DATA_DIR}:/data
+      - ./init.sh:/init.sh
+    entrypoint: ["/bin/sh", "/init.sh"]
+    restart: "no"

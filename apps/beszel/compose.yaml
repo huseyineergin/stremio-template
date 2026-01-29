@@ -2,6 +2,7 @@ services:
   beszel:
     image: henrygd/beszel:0.18
     container_name: beszel
+    user: "$PUID:$PGID"
     expose:
       - 8090
     labels:
@@ -29,6 +30,7 @@ services:
       LISTEN: /beszel_socket/beszel.sock
       HUB_URL: http://beszel:8090
       KEY: ${BESZEL_AGENT_KEY}
+      TOKEN: ${BESZEL_AGENT_TOKEN}
     volumes:
       - ${DOCKER_DATA_DIR}/beszel/agent:/var/lib/beszel-agent
       - ${DOCKER_DATA_DIR}/beszel/socket:/beszel_socket

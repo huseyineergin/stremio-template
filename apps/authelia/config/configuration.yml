@@ -27,7 +27,7 @@ totp:
 
 # Reference: https://www.authelia.com/configuration/security/access-control/
 access_control:
-  default_policy: "deny"
+  default_policy: "one_factor"
   # TODO
 
 # Reference: https://www.authelia.com/configuration/identity-validation/introduction/
