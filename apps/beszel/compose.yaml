@@ -3,8 +3,8 @@ services:
     image: henrygd/beszel:0.18
     container_name: beszel
     user: "$PUID:$PGID"
-    expose:
-      - 8090
+    ports:
+      - "127.0.0.1:8090:8090"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.beszel.rule=Host(`${BESZEL_HOSTNAME?}`)"
@@ -29,7 +29,7 @@ services:
     network_mode: host
     environment:
       LISTEN: /beszel_socket/beszel.sock
-      HUB_URL: http://beszel:8090
+      HUB_URL: http://localhost:8090
       KEY: ${BESZEL_AGENT_KEY}
       TOKEN: ${BESZEL_AGENT_TOKEN}
     volumes:

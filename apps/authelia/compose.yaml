@@ -14,7 +14,7 @@ services:
       - "traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader=true"
       - "traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email"
     volumes:
-      - "${DOCKER_LOGS_DIR}/authelia:/var/log/authelia/"
+      # - "${DOCKER_LOGS_DIR}/authelia:/var/log/authelia/"
       # - "./secrets:/secrets:ro"
       - "./config:/config"
     depends_on:

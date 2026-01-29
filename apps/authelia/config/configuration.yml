@@ -28,7 +28,11 @@ totp:
 # Reference: https://www.authelia.com/configuration/security/access-control/
 access_control:
   default_policy: "one_factor"
-  # TODO
+  rules:
+    - domain: '{{ env "TEMPLATE_BESZEL_HOSTNAME"  }}'
+      resources:
+        - ^/api/.*
+      policy: bypass
 
 # Reference: https://www.authelia.com/configuration/identity-validation/introduction/
 identity_validation:
@@ -85,9 +89,3 @@ server:
     read: "6s"
     write: "6s"
     idle: "30s"
-
-# Reference: https://www.authelia.com/configuration/miscellaneous/logging/
-log:
-  level: "info"
-  format: "text"
-  keep_stdout: true
