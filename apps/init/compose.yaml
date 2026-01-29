@@ -3,8 +3,8 @@ services:
     image: alpine:3.23
     container_name: init
     environment:
-      PUID: $PUID
-      PGID: $PGID
+      - PUID=${PUID}
+      - PGID=${PGID}
     user: "0:0"
     volumes:
       - ../traefik/letsencrypt:/letsencrypt

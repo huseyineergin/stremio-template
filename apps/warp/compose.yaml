@@ -7,7 +7,7 @@ services:
     expose:
       - 1080
     environment:
-      WARP_SLEEP: 5
+      - WARP_SLEEP=5
     cap_add:
       - NET_ADMIN
     sysctls:

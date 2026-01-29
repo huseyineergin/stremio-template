@@ -2,7 +2,7 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:2.0.2
     container_name: uptime-kuma
-    user: "$PUID:$PGID"
+    user: "${PUID}:${PGID}"
     expose:
       - 3001
     labels:
