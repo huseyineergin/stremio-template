@@ -330,11 +330,26 @@ When using PostgreSQL for AIOStreams’ database, set `POSTGRES_PASSWORD`, `POST
 - `POSTGRES_USER`
 - `POSTGRES_DB`
 
-7. Set the following values in the `.env` file in the `apps/mediaflow-proxy` folder:
+7. Define the users in the `users.yaml` file in the `apps/authelia/config` folder:
+```yaml
+users:
+  john.doe:
+    disabled: false
+    displayname: "John Doe"
+    # Generate the Argon2 password hash using the following command:
+    # docker run --rm authelia/authelia:latest authelia crypto hash generate argon2 --password 'password'
+    password: "$argon2id$v=19$m=65536,t=3,p=4$grHh7x/AakOfCsD0+TLv4g$xVGlLlhf5qnw0HhgP9mbB86VxF5llEOP0iBE3k0y05M"
+    email: "john.doe@example.com"
+    groups:
+      - "admins"
+      - "dev"
+```
+
+8. Set the following values in the `.env` file in the `apps/mediaflow-proxy` folder:
 - `API_PASSWORD`
 - `PROXY_URL`
 
-8. Set the email address in the `traefik.yaml` file in the `apps/traefik` folder:
+9. Set the email address in the `traefik.yaml` file in the `apps/traefik` folder:
 ```yaml
 certificatesResolvers:
   letsencrypt:
@@ -345,7 +360,7 @@ certificatesResolvers:
         entryPoint: web
 ```
 
-9. Ensure the current directory is the root of the apps folder, `/opt/stremio` if unchanged, and not inside an app-specific folder. This can be verified by running `pwd` and confirming it returns `/opt/stremio`. Once the folder is confirmed, start the services:
+10. Ensure the current directory is the root of the apps folder, `/opt/stremio` if unchanged, and not inside an app-specific folder. This can be verified by running `pwd` and confirming it returns `/opt/stremio`. Once the folder is confirmed, start the services:
 ```sh
 docker compose up -d
 ```
