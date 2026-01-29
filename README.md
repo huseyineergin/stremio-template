@@ -106,7 +106,7 @@ systemctl restart sshd.service
 
 #### Configure Firewall
 
-Set up a firewall. [`ufs`](https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29) and [`firewalld`](https://firewalld.org/) provide a simple setup, while [`iptables`](https://wiki.archlinux.org/title/Iptables) and [`nftables`](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page) offer more advanced configuration options.
+Set up a firewall. [`ufw`](https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29) and [`firewalld`](https://firewalld.org/) provide a simple setup, while [`iptables`](https://wiki.archlinux.org/title/Iptables) and [`nftables`](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page) offer more advanced configuration options.
 ```sh
 ufw allow <SOURCE_PUBLIC_IP> to any port 22
 ufw allow 80
