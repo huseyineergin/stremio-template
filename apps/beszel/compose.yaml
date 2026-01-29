@@ -10,7 +10,7 @@ services:
       - "traefik.http.routers.beszel.rule=Host(`${BESZEL_HOSTNAME?}`)"
       - "traefik.http.routers.beszel.entrypoints=websecure"
       - "traefik.http.routers.beszel.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.api.middlewares=authelia@docker"
+      - "traefik.http.routers.beszel.middlewares=authelia@docker"
     volumes:
       - ${DOCKER_DATA_DIR}/beszel/socket:/beszel_socket
       - ${DOCKER_DATA_DIR}/beszel/data:/beszel_data
