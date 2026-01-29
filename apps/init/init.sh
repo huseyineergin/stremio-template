@@ -10,9 +10,9 @@ mkdir -p /data/authelia/db
 mkdir -p /data/authelia/cache
 
 # Beszel
-mkdir -p /beszel/data
-mkdir -p /beszel/agent
-mkdir -p /beszel/socket
+mkdir -p /data/beszel/data
+mkdir -p /data/beszel/agent
+mkdir -p /data/beszel/socket
 
 # Traefik
 touch -c /letsencrypt/acme.json
