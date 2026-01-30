@@ -36,14 +36,14 @@ As the first step, log in to the VPS as the `root` user using SSH.
 ssh -i /path/to/private/key root@VPS_PUBLIC_IP
 ```
 
-#### Change Root Password
+#### 1. Change Root Password
 
 Change the `root` password to something long and complex. This password should be stored securely. It is needed if SSH access is lost or the `sudo` password needs to be recovered.
 ```sh
 passwd
 ```
 
-#### Update and Upgrade Packages
+#### 2. Update and Upgrade Packages
 
 Update the package list and upgrade all installed packages to their latest versions.
 ```sh
@@ -55,7 +55,7 @@ Install `fail2ban`. It is a daemon that monitors login attempts to a server and 
 apt install fail2ban
 ```
 
-#### Add a New User
+#### 3. Add a New User
 
 Add a login user. Feel free to name the user something besides `debian`.
 ```sh
@@ -74,7 +74,7 @@ Add login user to the `sudoers`.
 usermod -aG sudo debian
 ```
 
-#### Configure Public Key Authentication
+#### 4. Configure Public Key Authentication
 
 Add public keys for authentication. It'll enhance security and ease of use by ditching passwords and employing [public key authentication](https://en.wikipedia.org/wiki/Public-key_cryptography) for user accounts. Add the contents of the local public key file, along with any additional public keys requiring access to this server, to this file.
 ```sh
@@ -84,7 +84,7 @@ chmod 400 /home/debian/.ssh/authorized_keys
 chown debian:debian /home/debian -R
 ```
 
-#### Harden SSH Configuration
+#### 5. Harden SSH Configuration
 
 Configure SSH to prevent password and `root` logins.
 ```sh
@@ -104,7 +104,7 @@ service ssh restart
 systemctl restart sshd.service
 ```
 
-#### Configure Firewall
+#### 6. Configure Firewall
 
 Set up a firewall. [`ufw`](https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29) and [`firewalld`](https://firewalld.org/) provide a simple setup, while [`iptables`](https://wiki.archlinux.org/title/Iptables) and [`nftables`](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page) offer more advanced configuration options.
 ```sh
@@ -143,7 +143,7 @@ In this specific setup:
   - **WireGuard Server**: Refers to the Virtual Private Server (VPS).
   - **WireGuard Peer**: Refers to the local machine.
 
-#### Installing WireGuard and Generating a Key Pair
+#### 1. Installing WireGuard and Generating a Key Pair
 
 Install WireGuard on **WireGuard Server**.
 ```sh
@@ -167,7 +167,7 @@ sudo cat /etc/wireguard/private.key | wg pubkey | sudo tee /etc/wireguard/public
 
 A single line of base64-encoded output will be produced again, which is the public key this time. Copy it somewhere for reference as well, since the public key needs to be distributed to any peer that will connect to the server.
 
-#### Choosing IPv4 Address
+#### 2. Choosing IPv4 Address
 
 Choose an IPv4 range. The server needs a range of private IPv4 addresses to use for clients, and for its tunnel interface. Any range of IP addresses may be selected from the following reserved address blocks.
 - `10.0.0.0` to `10.255.255.255` (10/8 prefix)
@@ -178,7 +178,7 @@ For the purposes of this guide, `10.8.0.0/24` is used as a block of IP addresses
 
 The **WireGuard Server** will use a single IP address from the range for its private tunnel IPv4 address, `10.8.0.1/24` in this case, but any address in the range of `10.8.0.1` to `10.8.0.255` can be used.
 
-#### Creating a WireGuard Server Configuration
+#### 3. Creating a WireGuard Server Configuration
 
 After obtaining the required private key and IP address, create a new configuration file using `vim` or another preferred editor.
 ```sh
@@ -195,7 +195,7 @@ ListenPort = 51820
 ```
 Save and close the `/etc/wireguard/wg0.conf` file.
 
-#### Starting the WireGuard Server
+#### 4. Starting the WireGuard Server
 
 WireGuard can be configured to run as a `systemd` service using its built-in `wg-quick` script. Using a `systemd` service means that WireGuard can be configured to start up at boot so that peers can connect to the server at any time as long as the server is running. To do this, enable the `wg-quick` service for the `wg0` tunnel that has been defined by adding it to `systemctl`.
 ```sh
@@ -212,7 +212,7 @@ Double check that the WireGuard service is active with the following command.
 sudo systemctl status wg-quick@wg0.service
 ```
 
-#### Configuring a WireGuard Peer
+#### 5. Configuring a WireGuard Peer
 
 Configuring a **WireGuard Peer** is similar to setting up the **WireGuard Server** if **WireGuard Peer** is using Debian/Ubuntu as well. However, if the **WireGuard Peer** is using a different platform, such as Windows, the configuration steps differ slightly. In this guide, the **WireGuard Peer** is a Windows machine.
 
@@ -235,7 +235,7 @@ AllowedIPs = 10.8.0.0/24
 Endpoint = WIREGUARD_SERVER_PUBLIC_IP:51820
 ```
 
-#### Adding the WireGuard Peer’s Public Key to the WireGuard Server
+#### 6. Adding the WireGuard Peer’s Public Key to the WireGuard Server
 
 Copy the **WireGuard Peer** public key and `Address`. Then, add them to the **WireGuard Server** configuration.
 ```conf
@@ -250,7 +250,7 @@ PublicKey = base64_encoded_PEER_PUBLIC_key_goes_here
 AllowedIPs = 10.8.0.2
 ```
 
-#### Update SSH Daemon, Firewall, and WireGuard to Apply Changes
+#### 7. Update SSH Daemon, Firewall, and WireGuard to Apply Changes
 
 Bind SSH to the WireGuard interface, blocking public access.
 ```sh
@@ -267,6 +267,8 @@ Update the firewall to allow WireGuard traffic.
 sudo ufw allow 51820/udp
 ```
 
+> After binding SSH to `10.8.0.1`, the public UFW rule for port 22 can be removed (`ufw delete allow 22`) to ensure SSH access is restricted to the tunnel.
+
 Restart SSH.
 ```sh
 sudo service ssh restart
@@ -281,7 +283,7 @@ sudo service wg-quick@wg0 restart
 sudo systemctl restart wg-quick@wg0.service
 ```
 
-#### Verify the Connection
+#### 8. Verify the Connection
 
 In the WireGuard client, select the tunnel and click `Activate`. A successful handshake indicates active connectivity.
 
@@ -335,7 +337,7 @@ When using PostgreSQL for AIOStreams’ database, set `POSTGRES_PASSWORD`, `POST
 
 > **Note:** When NOT using PostgreSQL for AIOStreams’ database, comment out the PostgreSQL related entries in `apps/aiostreams/compose.yaml` file.
 
-6. Set the following values in the `apps/authelia/.env` file:
+7. Set the following values in the `apps/authelia/.env` file:
 - `REDIS_PASSWORD`
 - `POSTGRES_PASSWORD`
 - `POSTGRES_USER`
