@@ -15,7 +15,7 @@ mkdir -p /data/beszel/agent
 mkdir -p /data/beszel/socket
 
 # Traefik
-touch -c /letsencrypt/acme.json
+touch /letsencrypt/acme.json
 chmod 600 /letsencrypt/acme.json
 chown -R "${PUID}:${PGID}" /letsencrypt
 
