@@ -27,12 +27,17 @@ totp:
 
 # Reference: https://www.authelia.com/configuration/security/access-control/
 access_control:
-  default_policy: "one_factor"
+  default_policy: "deny"
   rules:
-    - domain: '{{ env "TEMPLATE_BESZEL_HOSTNAME"  }}'
-      resources:
-        - ^/api/.*
-      policy: bypass
+    - domain:
+        - '{{ env "TEMPLATE_BESZEL_HOSTNAME"  }}'
+        - '{{ env "TEMPLATE_UPTIME_KUMA_HOSTNAME"  }}'
+      policy: "bypass"
+    - domain:
+        - '{{ env "TEMPLATE_AIOSTREAMS_HOSTNAME"  }}'
+        - '{{ env "TEMPLATE_DOZZLE_HOSTNAME"  }}'
+        - '{{ env "TEMPLATE_TRAEFIK_HOSTNAME"  }}'
+      policy: "one_factor"
 
 # Reference: https://www.authelia.com/configuration/identity-validation/introduction/
 identity_validation:
